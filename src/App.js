@@ -1,9 +1,18 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Headers from "./components/Layout/Headers";
+import Meals from "./components/meals/Meals";
 
 function App() {
   return (
-   <Headers></Headers>
+      <Fragment>
+
+          <Headers/>
+          <main>
+              <Meals/>
+          </main>
+
+      </Fragment>
+
   );
 }
 
