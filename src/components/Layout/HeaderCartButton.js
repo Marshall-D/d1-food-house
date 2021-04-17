@@ -6,7 +6,7 @@ const HeaderCartButton = (props) => {
 
     return (
         <Fragment>
-           <button className={classes.button}>
+           <button className={classes.button} onClick={props.onCLick}>
                <span className={classes.icon}>
                    <CartIcon></CartIcon>
 
