@@ -1,16 +1,24 @@
-import DUMMY_MEALS from "./DummyMeals";
 import classes from './AvailableMeals.module.css'
 import Card from "../ui/Card";
 import MealItem from "./MealItem/MealItem";
 import {useEffect,useState} from 'react';
 
 const AvailableMeals = () => {
-    const [meals,setMeals] = useState([])
-    const [isLoading,setIsLoading] = useState(true)
+    const [meals,setMeals] = useState([]);
+    const [isLoading,setIsLoading] = useState(true);
+    const [httpError,setHttpError] = useState();
+
     useEffect(() => {
         const fetchMeals = async () => {
             const response = await fetch('https://react-my-burger-90039-default-rtdb.firebaseio.com/meals.json');
+
+            if (!response.ok){
+                throw new Error('Something went wrong');
+
+            };
+
             const responseData = await response.json();
+
 
             const loadedMeals = [];
 
@@ -28,14 +36,23 @@ const AvailableMeals = () => {
 
 
         };
-        fetchMeals();
+            fetchMeals().catch((error)=>{
+                setIsLoading(false);
+                setHttpError(error.message);
 
+            });
 
     },[]);
+
 
     if (isLoading) {
       return <section>
           <p>Loading!!!</p>
+      </section>
+    };
+    if (httpError) {
+      return <section>
+          <p>{httpError}</p>
       </section>
     };
 
